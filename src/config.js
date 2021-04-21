@@ -1,4 +1,4 @@
-export const Chain_Address='0x407FEDCdED786911E58687f4cf07107206f96a5b' //address of the contract on blockchain
+export const Chain_Address='0x3ac996C622b3eD5eAc9568Cd4C6ebB9a63542441' //address of the contract on blockchain
 
 
 // abi
@@ -27,6 +27,18 @@ export const Chain_ABI= [
       {
         "indexed": false,
         "internalType": "string",
+        "name": "_manufacture",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "expiry",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "_location",
         "type": "string"
       }
@@ -45,9 +57,9 @@ export const Chain_ABI= [
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "_location",
-        "type": "string"
+        "internalType": "address",
+        "name": "_buyeraddress",
+        "type": "address"
       }
     ],
     "name": "transferOwnerCompleted",
@@ -99,6 +111,21 @@ export const Chain_ABI= [
         "internalType": "string",
         "name": "productName",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "expiry",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "manufacture",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "location",
+        "type": "string"
       }
     ],
     "payable": false,
@@ -128,7 +155,7 @@ export const Chain_ABI= [
       },
       {
         "internalType": "string",
-        "name": "location",
+        "name": "purchaseDate",
         "type": "string"
       }
     ],
@@ -187,6 +214,16 @@ export const Chain_ABI= [
       },
       {
         "internalType": "string",
+        "name": "_manufacture",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_expiry",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "_location",
         "type": "string"
       }
@@ -212,17 +249,22 @@ export const Chain_ABI= [
         "type": "uint256"
       },
       {
+        "internalType": "address",
+        "name": "_buyeraddress",
+        "type": "address"
+      },
+      {
         "internalType": "string",
-        "name": "_location",
+        "name": "_purchaseDate",
         "type": "string"
       }
     ],
     "name": "transferOwner",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "string",
         "name": "",
-        "type": "bool"
+        "type": "string"
       }
     ],
     "payable": false,
@@ -249,13 +291,66 @@ export const Chain_ABI= [
           },
           {
             "internalType": "string",
-            "name": "location",
+            "name": "purchaseDate",
             "type": "string"
           }
         ],
         "internalType": "struct Chain.OwnerDetails[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPorductDetails",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ownerCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "productName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "expiry",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "manufacture",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "location",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Chain.Item",
+        "name": "",
+        "type": "tuple"
       }
     ],
     "payable": false,

@@ -1,10 +1,16 @@
 
 import './App.css';
 import Web3 from 'web3'
+import Signin from './Signin'
+import {BrowserRouter as Router , Route, Switch} from 'react-router-dom'
 
 import React ,{Component} from 'react';
-
+import Home from './pages/Home.js'
 import {Chain_ABI,Chain_Address} from './config'
+import AddProduct from './pages/AddProduct.js'
+import CheckProduct from './pages/CheckProduct.js'
+
+
 class App extends Component {
 
   constructor(props){
@@ -21,7 +27,7 @@ class App extends Component {
   }
 
   async loadBlockchainData(){
-    const web3=new Web3(/*Web3.givenProvider ||*/ "http://localhost:7545")
+    const web3=new Web3(/*Web3.givenProvider ||*/ "http://127.0.0.1:7545")
     const network=await web3.eth.net.getNetworkType();
     //console.log("network ", network);
     const accounts=await web3.eth.getAccounts();
@@ -51,12 +57,21 @@ class App extends Component {
   render(){
   return (
     <div className="App">
-      <h1>hello world</h1>
+      {/* <h1>hello world</h1>
       <h6>account:{this.state.account}</h6>
       <h6>productCount:{this.state.productCount}</h6>
      {this.state.items.map((item,key)=>{
         return (<h6>{item.productName}</h6>)
-      })}
+      })} */}
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Home}></Route>
+          <Route exact path='/add product' component={AddProduct}></Route>
+          <Route exact path='/check product' component={CheckProduct}></Route>
+        </Switch>
+      </Router>
+     
+      
     </div>
   );
   }
