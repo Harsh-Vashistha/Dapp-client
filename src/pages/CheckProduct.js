@@ -36,9 +36,11 @@ const useStyles = makeStyles((theme) => ({
 export default function AddProduct() {
     
     async function handleSubmit(e){
-        
+        const web3=await new Web3(window.ethereum);
         console.log("handle submit");
-        const web3=await new Web3(/*Web3.givenProvider ||*/ "http://127.0.0.1:7545")
+        //const web3=await new Web3("http://127.0.0.1:8545");
+        //const web3=await new Web3("https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350");
+     
         const network=web3.eth.net.getNetworkType();
         //console.log("network ", network);
         const accounts=await web3.eth.getAccounts()

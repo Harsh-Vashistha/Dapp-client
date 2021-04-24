@@ -37,14 +37,15 @@ export default function AddProduct() {
     async function handleSubmit(){
 
         console.log("handle submit");
-        const web3=await new Web3(/*Web3.givenProvider ||*/ "http://127.0.0.1:7545")
+        const web3=await new Web3(window.ethereum);
+       // const web3=await new Web3(/*Web3.givenProvider ||*/ "https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350")
         const network=web3.eth.net.getNetworkType();
         //console.log("network ", network);
         const accounts=await web3.eth.getAccounts()
-        //console.log(productId,buyerAccountAddress);
+        console.log("accounts ",accounts );
         const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
         console.log(supplyChain);
-        await supplyChain.methods.addProduct(productId,productName,manufacture,expiryDate,location).send({from:accounts[0],gas: 4712388,gasPrice: 100000000000})
+        await supplyChain.methods.addProduct(productId,productName,manufacture,expiryDate,location).send({from:accounts[0]})
         .then(function(receipt){
             // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
             console.log("receipt",receipt);

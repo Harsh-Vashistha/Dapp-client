@@ -8,13 +8,7 @@ import { Link } from 'react-router-dom';
 import Input from '../Input'
 import Web3 from 'web3'
 import {Chain_ABI,Chain_Address} from '../config'
-
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-
+import getWeb3 from "../getWeb3";
 
 
 
@@ -33,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar:{
     background : '#2E3B55'
-  },
+  }, 
   card:{
     margin:'auto',
     justify:'center',
@@ -43,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ButtonAppBar() {
+
+export default function ButtonAppBar(props) {
   const classes = useStyles();
   const [productId, setproductId] = useState('')
   const [productHistory,setproductHistory]=useState([]);
@@ -54,8 +49,19 @@ export default function ButtonAppBar() {
   }
 
   async function handleClick(){
+    const web3=await new Web3(window.ethereum);
+    const accounts=await web3.eth.getAccounts();
+    const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
+    const history=await supplyChain.methods.getownerHistory(productId).call();
+    const details=await supplyChain.methods.getPorductDetails(productId).call();
+    setproductHistory(history);
+    setproductDetails(details);
+    console.log("product history are ",history);
+    console.log("product details are ",details);
+
+    /*
     console.log("handle submit");
-    const web3=await new Web3("http://127.0.0.1:7545")
+    const web3=await new Web3("https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350")
     const network=web3.eth.net.getNetworkType();
     const accounts=await web3.eth.getAccounts()
     const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
@@ -65,6 +71,7 @@ export default function ButtonAppBar() {
     setproductDetails(details);
     console.log("product history are ",history);
     console.log("product details are ",details);
+    */
   }
 
   return (
@@ -92,7 +99,7 @@ export default function ButtonAppBar() {
       </div>
       </div>
       <div styles={classes.card}>
-      {productDetails.length>0?(
+      {productDetails.length>0 && productDetails.id!=0?(
       <div style={{padding:10}}>
           <h1 style={{flex:0.5}}>{`${productDetails.productName}`}</h1>
           <h6>{`expiry:${productDetails.expiry}`}</h6>
