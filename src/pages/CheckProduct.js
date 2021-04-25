@@ -88,7 +88,7 @@ export default function AddProduct() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-            Check out Product
+            Check-in Product
         </Typography>
     
           <TextField
@@ -122,7 +122,7 @@ export default function AddProduct() {
              component={Link}
              to='/'
              >
-               Submit
+               Done!
             </Button>
 
       </div>
