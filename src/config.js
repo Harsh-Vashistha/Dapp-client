@@ -1,8 +1,8 @@
-export const Chain_Address='0x7452383b5c5C1e2EF01bbf66644B99a9caD09f88' //address of the contract on blockchain
+export const Chain_Address='0x63223dE0A553398eB7b26F12b2BbfaB5173920fB' //address of the contract on blockchain
 
 
 // abi
-export const Chain_ABI= [
+export const Chain_ABI=[
   {
     "inputs": [],
     "payable": false,

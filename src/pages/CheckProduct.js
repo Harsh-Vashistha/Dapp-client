@@ -51,6 +51,7 @@ export default function AddProduct() {
         .then(function(receipt){
             // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
             console.log("receipt",receipt);
+            window.alert("Ownership transfer successful")
         });
 
         seterror(error);

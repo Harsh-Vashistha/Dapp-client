@@ -9,7 +9,7 @@ import Input from '../Input'
 import Web3 from 'web3'
 import {Chain_ABI,Chain_Address} from '../config'
 import getWeb3 from "../getWeb3";
-
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     justify:'center',
     alignContent:'center',
     alignItems:'center'
+  },
+  butt:{
+    marginTop: 10000
+  },
+  contant:{
+    top: 45
   }
 }));
 
@@ -85,17 +91,19 @@ export default function ButtonAppBar(props) {
           </Typography>
           <Typography variant="h6" className={classes.title}>
               <Button component={Link} to='/check product' className={classes.link}>  
-                  Check Product
+                  Check-in Product
               </Button>
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-
-      <div className="searchfield">
-      <Input id={1} label="Field label" Id={productId} onChange={handleChange}  locked={false} active={false}/>
-      <div style={{padding:12}}>
+      <Container maxWidth="sm">
+      <div >
+      <div className="searchfield" >
+      <Input id={1} label="Field label" Id={productId} onChange={handleChange} locked={false} active={true} placeholder="Enter product id"/>
+      <div style={{marginTop:'30px'}}>
       <Button color="primary" variant="contained" onClick={handleClick}>Search</Button>
+      </div>
       </div>
       </div>
       <div styles={classes.card}>
@@ -115,7 +123,7 @@ export default function ButtonAppBar(props) {
           // {/* <h6 key={key}>{record.owner}</h6></div>) */}
       )})
       }
-
-    </div>
+     </Container>
+    </div> 
   );
 }
