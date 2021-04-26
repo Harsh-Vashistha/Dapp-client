@@ -49,6 +49,7 @@ export default function ButtonAppBar(props) {
   }
 
   async function handleClick(){
+    /* working for localhost
     const web3=await new Web3(window.ethereum);
     const accounts=await web3.eth.getAccounts();
     const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
@@ -58,8 +59,9 @@ export default function ButtonAppBar(props) {
     setproductDetails(details);
     console.log("product history are ",history);
     console.log("product details are ",details);
+    */
 
-    /*
+    
     console.log("handle submit");
     const web3=await new Web3("https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350")
     const network=web3.eth.net.getNetworkType();
@@ -71,7 +73,7 @@ export default function ButtonAppBar(props) {
     setproductDetails(details);
     console.log("product history are ",history);
     console.log("product details are ",details);
-    */
+    
   }
 
   return (

@@ -68,17 +68,6 @@ export default function AddProduct() {
   const year=newDate.getFullYear();
   const purchaseDate=date.toString()+'-'+month.toString()+'-'+year.toString();
 
-//   useEffect(() => {
-//     const web3=new Web3("http://localhost:7545")
-//     const network=web3.eth.net.getNetworkType();
-    
-//     const accounts= web3.eth.getAccounts();
-    
-//     console.log("account",accounts);
-
-//   },[]);
-
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
