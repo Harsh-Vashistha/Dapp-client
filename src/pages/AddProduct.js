@@ -9,7 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
 import Container from '@material-ui/core/Container';
-
+import {
+  MuiPickersUtilsProvider ,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,13 +62,17 @@ export default function AddProduct() {
   const [location,setlocation]=useState('');
   const [productId,setproductId]=useState('');
   const [productName,setproductName]=useState('');
-  const [expiryDate,setexpiryDate]=useState('');
+  const [expiryDate,setexpiryDate]=useState(new Date('2022-08-18T21:11:54'));
 
   const newDate=new Date();
   const date=newDate.getDate();
   const month=newDate.getMonth()+1;
   const year=newDate.getFullYear();
   const  manufacture =date.toString()+'-'+month.toString()+'-'+year.toString();
+
+  const handleDateChange = (date) => {
+    setexpiryDate(date);
+  };
 
 //   useEffect(() => {
 //     const web3=new Web3("http://localhost:7545")
@@ -80,12 +88,16 @@ export default function AddProduct() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Typography component="h2" variant="h2">
+             <pre>   T-Checks
+               </pre>
+        </Typography>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          AddProduct
+          Add Product
         </Typography>
     
           <TextField
@@ -118,17 +130,21 @@ export default function AddProduct() {
             onChange={(e)=>setlocation(e.target.value)}
             autoComplete="location"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label="expiry date of product"
-            value={expiryDate}
-            onChange={(e)=>setexpiryDate(e.target.value)}
-            autoComplete="expiry of product"
-          />
-
+         <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="dd/MM/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Product expiry date*"
+          value={expiryDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+</MuiPickersUtilsProvider>
              <Button 
              fullWidth
              variant="contained"

@@ -9,7 +9,7 @@ import Input from '../Input'
 import Web3 from 'web3'
 import {Chain_ABI,Chain_Address} from '../config'
 import getWeb3 from "../getWeb3";
-
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,14 @@ const useStyles = makeStyles((theme) => ({
     margin:'auto',
     justify:'center',
     alignContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    
+  },
+  butt:{
+    marginTop: 10000
+  },
+  contant:{
+    top: 45
   }
 }));
 
@@ -87,37 +94,44 @@ export default function ButtonAppBar(props) {
           </Typography>
           <Typography variant="h6" className={classes.title}>
               <Button component={Link} to='/check product' className={classes.link}>  
-                  Check Product
+                  Check-in Product
               </Button>
           </Typography>
-          <Button color="inherit">Login</Button>
+          T-Checks (all rights reserved)
         </Toolbar>
       </AppBar>
-
-      <div className="searchfield">
-      <Input id={1} label="Field label" Id={productId} onChange={handleChange}  locked={false} active={false}/>
-      <div style={{padding:12}}>
+      <Container maxWidth="sm">
+      <div >
+      <div className="searchfield" >
+      <Input id={1} label="Field label" Id={productId} onChange={handleChange} locked={false} active={true} placeholder="Enter product id"/>
+      <div style={{marginTop:'30px'}}>
       <Button color="primary" variant="contained" onClick={handleClick}>Search</Button>
       </div>
       </div>
-      <div styles={classes.card}>
+      </div>
+      <div styles={classes.card} >
       {productDetails.length>0 && productDetails.id!=0?(
-      <div style={{padding:10}}>
-          <h1 style={{flex:0.5}}>{`${productDetails.productName}`}</h1>
+      <div  style={{marginTop:30,backgroundColor:'#2E3B55',borderRadius:10,padding:10,color:'white',width:"100%" }}>
+          <div style={{flexDirection:"row",display:"flex",textDecoration:"bold"}}>
+          <h5 style={{marginTop:15,marginInlineEnd:20}}>
+          Product Name:  
+          </h5>
+          <h1 style={{flexGrow:1}}>{` ${productDetails.productName}`}</h1>
+          </div>
           <h6>{`expiry:${productDetails.expiry}`}</h6>
         </div>
       ):(null)}
       </div>
       {productHistory.map((record,key)=>{
         return (
-        <div styles={{padding:10}}>
-            <h3>owner:{`${record.owner}`} </h3>
+        <div styles={{padding:10}} style={{marginTop:20}}>
+            <h3>owner{key+1}:{`${record.owner}`} </h3>
             <h6>{`purchase Date:${record.purchaseDate}     `}</h6>
         </div>
           // {/* <h6 key={key}>{record.owner}</h6></div>) */}
       )})
       }
-
-    </div>
+     </Container>
+    </div> 
   );
 }

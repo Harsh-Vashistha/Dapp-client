@@ -25,6 +25,7 @@ export default class Input extends React.Component {
           onChange={this.props.onChange}
           onFocus={() => !locked && this.setState({ active: true })}
           onBlur={() => !locked && this.setState({ active: false })}
+          placeholder="Enter Product ID"
         />
         </div>
     );
