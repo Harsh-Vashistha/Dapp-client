@@ -10,7 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
+import HDWalletProvider from "@truffle/hdwallet-provider"
 
+let privatekey="796e29446be648eb1a99fb22600492778dec8b4f6263289e15ffdebe49a9c625"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,27 +38,21 @@ const useStyles = makeStyles((theme) => ({
 export default function AddProduct() {
     
     async function handleSubmit(e){
-        const web3=await new Web3(window.ethereum);
-        console.log("handle submit");
-        //const web3=await new Web3("http://127.0.0.1:8545");
-        //const web3=await new Web3("https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350");
-     
-        const network=web3.eth.net.getNetworkType();
-        //console.log("network ", network);
-        const accounts=await web3.eth.getAccounts()
-        //console.log(productId,buyerAccountAddress);
-        const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
-        console.log(supplyChain);
-        const error=await supplyChain.methods.transferOwner(productId,buyerAccountAddress,purchaseDate).send({from:accounts[0],gas: 4712388,gasPrice: 100000000000})
-        .then(function(receipt){
-            // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
-            console.log("receipt",receipt);
-            window.alert("Ownership transfer successful")
+      const provider = new HDWalletProvider(privatekey, "https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350");
+      const web3 = new Web3(provider);
+      const accounts=await web3.eth.getAccounts();
+      const supplyChain=new web3.eth.Contract(Chain_ABI,Chain_Address);
+      console.log(supplyChain);
+      const error=await supplyChain.methods.transferOwner(productId,buyerAccountAddress,purchaseDate).send({from:accounts[0],gas: 4712388,gasPrice: 100000000000})
+      .then(function(receipt){
+        // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
+        console.log("receipt",receipt);
+        window.alert("Ownership transfer successful")
         });
 
         seterror(error);
         console.log("error",error);
-    }
+     }
   const classes = useStyles();
 
   const [buyerAccountAddress,setAddress]=useState('');
@@ -68,6 +64,7 @@ export default function AddProduct() {
   const month=newDate.getMonth()+1;
   const year=newDate.getFullYear();
   const purchaseDate=date.toString()+'-'+month.toString()+'-'+year.toString();
+
 
   return (
     <Container component="main" maxWidth="xs">

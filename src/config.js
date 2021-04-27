@@ -1,4 +1,4 @@
-export const Chain_Address='0x718801C33B36762831b8866b47cd9D4Dd0017724' //address of the contract on blockchain
+export const Chain_Address='0x7452383b5c5C1e2EF01bbf66644B99a9caD09f88' //address of the contract on blockchain
 
 
 // abi

@@ -14,6 +14,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import HDWalletProvider from "@truffle/hdwallet-provider"
+import transitions from '@material-ui/core/styles/transitions';
+
+let privatekey="796e29446be648eb1a99fb22600492778dec8b4f6263289e15ffdebe49a9c625"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,21 +45,34 @@ export default function AddProduct() {
     async function handleSubmit(){
 
         console.log("handle submit");
-        const web3=await new Web3(window.ethereum);
-       // const web3=await new Web3(/*Web3.givenProvider ||*/ "https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350")
-        const network=web3.eth.net.getNetworkType();
-        //console.log("network ", network);
-        const accounts=await web3.eth.getAccounts()
-        console.log("accounts ",accounts );
-        const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
-        console.log(supplyChain);
-        await supplyChain.methods.addProduct(productId,productName,manufacture,expiryDate,location).send({from:accounts[0]})
-        .then(function(receipt){
-            // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
-            console.log("receipt",receipt);
-        });;
+        const address="0x516B447E0FaaC89447E0a1fd1aA722cbD21D5015"
+        const provider = new HDWalletProvider(privatekey, "https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350");
+        const web3 =await new Web3(provider);
         
 
+        const supplyChain=new web3.eth.Contract(Chain_ABI,Chain_Address);
+
+        const accounts=await web3.eth.getAccounts()
+        console.log("accounts ",accounts[0] );
+        console.log(supplyChain);
+        let tx=await supplyChain.methods.addProduct(productId,productName,manufacture,expiryDate,location).encodeABI();
+
+        console.log("tx" ,tx);
+        let transacationObj={
+          gas:100000,
+          data:tx,
+          from:address,
+        };
+        let signedTransactionObj=await web3.eth.accounts.signTransaction(
+          transacationObj,
+          privatekey
+        );
+
+        let result=await web3.eth.sendSignedTransaction(
+          signedTransactionObj.rawTransaction
+        );
+
+        console.log("product added")
     }
   const classes = useStyles();
 
@@ -73,16 +90,6 @@ export default function AddProduct() {
   const handleDateChange = (date) => {
     setexpiryDate(date);
   };
-
-//   useEffect(() => {
-//     const web3=new Web3("http://localhost:7545")
-//     const network=web3.eth.net.getNetworkType();
-    
-//     const accounts= web3.eth.getAccounts();
-    
-//     console.log("account",accounts);
-
-//   },[]);
 
 
   return (

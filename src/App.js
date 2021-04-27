@@ -10,7 +10,10 @@ import {Chain_ABI,Chain_Address} from './config'
 import AddProduct from './pages/AddProduct.js'
 import CheckProduct from './pages/CheckProduct.js'
 import getWeb3 from "./getWeb3";
-let web3;
+
+import HDWalletProvider from "@truffle/hdwallet-provider"
+
+let privatekey="796e29446be648eb1a99fb22600492778dec8b4f6263289e15ffdebe49a9c625"
 class App extends Component {
 
   constructor(props){
@@ -27,17 +30,15 @@ class App extends Component {
   }
   
   async loadBlockchainData(){
-    
-      //get network provider and web3 instance
-      web3=await getWeb3();
-      console.log("web3",web3);
-      const networkId=await web3.eth.net.getId();
-      const supplyChain=await new web3.eth.Contract(Chain_ABI,Chain_Address)
-      const account=await web3.eth.getAccounts();
-      console.log("accounts: ",account);
-      this.setState({account});
 
+    const provider = await new HDWalletProvider(privatekey, "https://ropsten.infura.io/v3/6741bd65e9ef41fbb8cc76b45b2d5350");
+    const web3 =await new Web3(provider);
+
+    const supplyChain= await new web3.eth.Contract(Chain_ABI,Chain_Address);
+      //setting state variables to display data
       const productCount=await supplyChain.methods.productCount().call();
+      console.log("productCount ",productCount);
+
       this.setState({productCount});
 
       for(var i=1;i<=productCount;i++){
@@ -48,6 +49,8 @@ class App extends Component {
       }
   
       console.log("item array is ",this.state.items);
+      const accounts=await web3.eth.getAccounts();
+      console.log("account",accounts[0]);
     
     /* 
       for local blockchain
@@ -85,9 +88,9 @@ class App extends Component {
       })} */}
       <Router>
         <Switch>
-          <Route exact path='/' component={Home} web3={web3}></Route>
-          <Route exact path='/add product' component={AddProduct} web3={web3}></Route>
-          <Route exact path='/check product' component={CheckProduct} web3={web3}></Route>
+          <Route exact path='/' component={Home}></Route>
+          <Route exact path='/add product' component={AddProduct} ></Route>
+          <Route exact path='/check product' component={CheckProduct}></Route>
         </Switch>
       </Router>
      
